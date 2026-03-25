@@ -206,7 +206,7 @@ export default function ComparePage() {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" fontSize={12} />
                       <YAxis tickFormatter={formatLakhs} fontSize={12} />
-                      <Tooltip formatter={(val: number) => formatINR(val)} />
+                      <Tooltip formatter={(val) => formatINR(Number(val))} />
                       <Legend />
                       <Bar dataKey="Old" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                       <Bar dataKey="New" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
@@ -242,7 +242,7 @@ export default function ComparePage() {
                           <Cell key={i} fill={COLORS[i]} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(val: number) => formatINR(val)} />
+                      <Tooltip formatter={(val) => formatINR(Number(val))} />
                     </PieChart>
                   </ResponsiveContainer>
                 </CardContent>

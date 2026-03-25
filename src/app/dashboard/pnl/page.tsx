@@ -172,7 +172,7 @@ function EmployeePnLSection() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" fontSize={12} />
                   <YAxis tickFormatter={formatLakhs} fontSize={12} />
-                  <Tooltip formatter={(val: number) => formatINR(val)} />
+                  <Tooltip formatter={(val) => formatINR(Number(val))} />
                   <Legend />
                   <Line type="monotone" dataKey="grossIncome" name="Gross Income" stroke="#3b82f6" strokeWidth={2} />
                   <Line type="monotone" dataKey="takeHome" name="Take Home" stroke="#10b981" strokeWidth={2} />
@@ -207,7 +207,7 @@ function EmployeePnLSection() {
                       <Cell key={i} fill={COLORS[i]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(val: number) => formatINR(val)} />
+                  <Tooltip formatter={(val) => formatINR(Number(val))} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -311,7 +311,7 @@ function BusinessPnLSection() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" fontSize={12} />
                   <YAxis tickFormatter={formatLakhs} fontSize={12} />
-                  <Tooltip formatter={(val: number) => formatINR(val)} />
+                  <Tooltip formatter={(val) => formatINR(Number(val))} />
                   <Legend />
                   <Line type="monotone" dataKey="revenue" name="Revenue" stroke="#3b82f6" strokeWidth={2} />
                   <Line type="monotone" dataKey="grossProfit" name="Gross Profit" stroke="#10b981" strokeWidth={2} />
@@ -332,7 +332,7 @@ function BusinessPnLSection() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="quarter" fontSize={11} />
                   <YAxis tickFormatter={formatLakhs} fontSize={12} />
-                  <Tooltip formatter={(val: number) => formatINR(val)} />
+                  <Tooltip formatter={(val) => formatINR(Number(val))} />
                   <Legend />
                   <Bar dataKey="revenue" name="Revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="grossProfit" name="Gross Profit" fill="#10b981" radius={[4, 4, 0, 0]} />
@@ -362,7 +362,7 @@ function BusinessPnLSection() {
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(val: number) => formatINR(val)} />
+                  <Tooltip formatter={(val) => formatINR(Number(val))} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>

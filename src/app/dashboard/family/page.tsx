@@ -183,7 +183,7 @@ export default function FamilyPage() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" fontSize={12} />
                     <YAxis tickFormatter={formatLakhs} fontSize={12} />
-                    <Tooltip formatter={(val: number) => formatINR(val)} />
+                    <Tooltip formatter={(val) => formatINR(Number(val))} />
                     <Legend />
                     <Bar dataKey="Current Tax" fill="#ef4444" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="Potential Savings" fill="#10b981" radius={[4, 4, 0, 0]} />

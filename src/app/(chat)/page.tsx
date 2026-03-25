@@ -27,6 +27,22 @@ export default function ChatPage() {
     }
   }, [messages]);
 
+  // Listen for sidebar events
+  useEffect(() => {
+    const handleQuery = (e: Event) => {
+      const query = (e as CustomEvent<string>).detail;
+      sendMessage(query);
+    };
+    const handleReset = () => resetChat();
+
+    window.addEventListener("karaveda:query", handleQuery);
+    window.addEventListener("karaveda:reset", handleReset);
+    return () => {
+      window.removeEventListener("karaveda:query", handleQuery);
+      window.removeEventListener("karaveda:reset", handleReset);
+    };
+  }, [sendMessage, resetChat]);
+
   const handleSubmit = () => {
     if (!input.trim() || isLoading) return;
     sendMessage(input);

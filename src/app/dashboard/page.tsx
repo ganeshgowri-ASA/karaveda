@@ -152,6 +152,42 @@ export default function DashboardPage() {
           </Card>
         </div>
 
+        {/* Feature Navigation */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Link href="/dashboard/itr">
+            <Card className="cursor-pointer transition-colors hover:bg-accent border-blue-100 dark:border-blue-900">
+              <CardContent className="flex items-center gap-3 p-4">
+                <FileText className="h-5 w-5 text-blue-600" />
+                <span className="text-sm font-medium">ITR Filing</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/dashboard/compare">
+            <Card className="cursor-pointer transition-colors hover:bg-accent border-purple-100 dark:border-purple-900">
+              <CardContent className="flex items-center gap-3 p-4">
+                <TrendingUp className="h-5 w-5 text-purple-600" />
+                <span className="text-sm font-medium">Regime Compare</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/dashboard/pnl">
+            <Card className="cursor-pointer transition-colors hover:bg-accent border-emerald-100 dark:border-emerald-900">
+              <CardContent className="flex items-center gap-3 p-4">
+                <IndianRupee className="h-5 w-5 text-emerald-600" />
+                <span className="text-sm font-medium">P&L Dashboard</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/dashboard/family">
+            <Card className="cursor-pointer transition-colors hover:bg-accent border-amber-100 dark:border-amber-900">
+              <CardContent className="flex items-center gap-3 p-4">
+                <Scale className="h-5 w-5 text-amber-600" />
+                <span className="text-sm font-medium">Family Optimizer</span>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
         {/* Main Content Tabs */}
         <Tabs defaultValue="gst" className="space-y-4">
           <TabsList className="grid w-full grid-cols-3">

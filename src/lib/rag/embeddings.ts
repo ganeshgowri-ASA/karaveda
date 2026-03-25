@@ -106,7 +106,8 @@ export function chunkContent(content: string): string[] {
         start = breakPoint - OVERLAP_CHARS;
         if (start < 0) start = 0;
         // Prevent infinite loop if overlap pushes start backwards
-        if (start <= chunks.length > 1 ? breakPoint - MAX_CHUNK_CHARS : 0) {
+        const minStart = chunks.length > 1 ? breakPoint - MAX_CHUNK_CHARS : 0;
+        if (start <= minStart) {
           start = breakPoint;
         }
       }

@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
 
 export interface RBINotification {
   notificationNumber: string;
@@ -15,6 +15,8 @@ const ENDPOINTS = {
   notifications: "/Scripts/NotificationUser.aspx",
   circulars: "/Scripts/BS_CircularIndexDisplay.aspx",
 } as const;
+
+type CheerioRoot = ReturnType<typeof load>;
 
 // Keywords to filter tax-relevant RBI notifications
 const CATEGORY_KEYWORDS: Record<RBINotification["category"], string[]> = {
@@ -51,9 +53,10 @@ async function fetchPage(url: string): Promise<string> {
   return response.text();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseRBIRow(
-  $: cheerio.CheerioAPI,
-  row: cheerio.Element
+  $: CheerioRoot,
+  row: any
 ): RBINotification | null {
   const cells = $(row).find("td");
   if (cells.length < 3) return null;
@@ -83,7 +86,7 @@ async function fetchNotificationBody(
 
   try {
     const html = await fetchPage(notification.sourceUrl);
-    const $ = cheerio.load(html);
+    const $ = load(html);
 
     const body =
       $("#divContent").text().trim() ||
@@ -99,7 +102,7 @@ async function fetchNotificationBody(
 
 export async function scrapeRBINotifications(): Promise<RBINotification[]> {
   const html = await fetchPage(`${RBI_BASE_URL}${ENDPOINTS.notifications}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: RBINotification[] = [];
   $("table tbody tr, .grid-row").each((_, row) => {
@@ -112,7 +115,7 @@ export async function scrapeRBINotifications(): Promise<RBINotification[]> {
 
 export async function scrapeRBICirculars(): Promise<RBINotification[]> {
   const html = await fetchPage(`${RBI_BASE_URL}${ENDPOINTS.circulars}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: RBINotification[] = [];
   $("table tbody tr, .grid-row").each((_, row) => {

@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
 
 export interface ITNotification {
   circularNumber: string;
@@ -16,6 +16,8 @@ const ENDPOINTS = {
   notifications: "/pages/communications/notifications.aspx",
 } as const;
 
+type CheerioRoot = ReturnType<typeof load>;
+
 async function fetchPage(url: string): Promise<string> {
   const response = await fetch(url, {
     headers: {
@@ -32,9 +34,10 @@ async function fetchPage(url: string): Promise<string> {
   return response.text();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseITRow(
-  $: cheerio.CheerioAPI,
-  row: cheerio.Element,
+  $: CheerioRoot,
+  row: any,
   type: "circular" | "notification"
 ): ITNotification | null {
   const cells = $(row).find("td");
@@ -65,7 +68,7 @@ async function fetchNotificationBody(
 
   try {
     const html = await fetchPage(notification.sourceUrl);
-    const $ = cheerio.load(html);
+    const $ = load(html);
 
     const body =
       $(".order-content").text().trim() ||
@@ -81,7 +84,7 @@ async function fetchNotificationBody(
 
 export async function scrapeITCirculars(): Promise<ITNotification[]> {
   const html = await fetchPage(`${IT_BASE_URL}${ENDPOINTS.circulars}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: ITNotification[] = [];
   $("table tbody tr, .grid-row").each((_, row) => {
@@ -94,7 +97,7 @@ export async function scrapeITCirculars(): Promise<ITNotification[]> {
 
 export async function scrapeITNotifications(): Promise<ITNotification[]> {
   const html = await fetchPage(`${IT_BASE_URL}${ENDPOINTS.notifications}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: ITNotification[] = [];
   $("table tbody tr, .grid-row").each((_, row) => {

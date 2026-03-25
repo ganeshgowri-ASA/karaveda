@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio";
+import { load } from "cheerio";
 
 export interface GSTNotification {
   notificationNumber: string;
@@ -17,6 +17,8 @@ const ENDPOINTS = {
   advisories: "/advisories",
 } as const;
 
+type CheerioRoot = ReturnType<typeof load>;
+
 async function fetchPage(url: string): Promise<string> {
   const response = await fetch(url, {
     headers: {
@@ -33,9 +35,10 @@ async function fetchPage(url: string): Promise<string> {
   return response.text();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseNotificationRow(
-  $: cheerio.CheerioAPI,
-  row: cheerio.Element,
+  $: CheerioRoot,
+  row: any,
   type: "circular" | "notification"
 ): GSTNotification | null {
   const cells = $(row).find("td");
@@ -66,7 +69,7 @@ async function fetchNotificationBody(
 
   try {
     const html = await fetchPage(notification.sourceUrl);
-    const $ = cheerio.load(html);
+    const $ = load(html);
 
     // Common content selectors on cbic-gst.gov.in
     const body =
@@ -83,7 +86,7 @@ async function fetchNotificationBody(
 
 export async function scrapeGSTCirculars(): Promise<GSTNotification[]> {
   const html = await fetchPage(`${GST_BASE_URL}${ENDPOINTS.circulars}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: GSTNotification[] = [];
   $("table tbody tr").each((_, row) => {
@@ -96,7 +99,7 @@ export async function scrapeGSTCirculars(): Promise<GSTNotification[]> {
 
 export async function scrapeGSTNotifications(): Promise<GSTNotification[]> {
   const html = await fetchPage(`${GST_BASE_URL}${ENDPOINTS.notifications}`);
-  const $ = cheerio.load(html);
+  const $ = load(html);
 
   const notifications: GSTNotification[] = [];
   $("table tbody tr").each((_, row) => {

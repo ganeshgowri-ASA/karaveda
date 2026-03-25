@@ -105,7 +105,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="flex gap-2">
-              <Link href="/chat">
+              <Link href="/">
                 <Button variant="outline" size="sm">
                   <MessageSquare className="mr-2 h-4 w-4" />
                   Chat
@@ -122,7 +122,7 @@ export default function DashboardPage() {
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {/* Quick Actions */}
         <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Link href="/chat">
+          <Link href="/">
             <Card className="cursor-pointer transition-colors hover:bg-accent">
               <CardContent className="flex items-center gap-3 p-4">
                 <MessageSquare className="h-5 w-5 text-blue-600" />
